@@ -28,6 +28,7 @@ html {
 
 header {
   padding-bottom: 10px;
+  position: relative;
 }
 
 header h1 {
