@@ -1,0 +1,17 @@
+.card {
+  background: hsl(177, 94%, 20%);
+  color: #fff;
+  font-size: 1.2rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  border-radius: 10px;
+  gap: 5px;
+}
+
+.card img {
+  height: 100px;
+  width: auto;
+}
