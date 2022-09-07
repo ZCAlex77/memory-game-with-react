@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Card } from './components/Card';
+import { Help } from './components/Help';
 import { ScoreDisplay } from './components/ScoreDisplay';
 
 function App() {
@@ -34,8 +35,12 @@ function App() {
   const [highscore, setHighscore] = useState(0);
   const [visited, setVisited] = useState([]);
   const [cards, setCards] = useState(shuffle(shapes));
+  const [help, setHelp] = useState(true);
+
+  const toggleHelp = () => setHelp(!help);
 
   const chooseCard = (shape) => {
+    if (help) return;
     if (visited.includes(shape)) {
       setVisited([]);
       setScore(0);
@@ -47,6 +52,7 @@ function App() {
 
   useEffect(() => {
     if (score > highscore) setHighscore(score);
+    if (score % 12 === 0) setVisited([]);
     setCards(shuffle(shapes));
   }, [score]);
 
@@ -57,7 +63,9 @@ function App() {
           MEMORY GAME <span>by Alexandru Zmău</span>
         </h1>
         <ScoreDisplay score={score} highscore={highscore} />
+        <button onClick={toggleHelp}>?</button>
       </header>
+      <Help help={help} toggleHelp={toggleHelp} />
       <div className="board">
         {cards.map((shape, i) => (
           <Card
