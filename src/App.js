@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Card } from './components/Card';
 import { ScoreDisplay } from './components/ScoreDisplay';
 
@@ -18,8 +18,37 @@ function App() {
     'trapezoid',
   ];
 
+  const shuffle = (arr) => {
+    let shuffledArr = [...arr];
+    for (let i = 0; i < arr.length; i++) {
+      let swapTarget = Math.floor(Math.random() * arr.length);
+      [shuffledArr[i], shuffledArr[swapTarget]] = [
+        shuffledArr[swapTarget],
+        shuffledArr[i],
+      ];
+    }
+    return shuffledArr;
+  };
+
   const [score, setScore] = useState(0);
   const [highscore, setHighscore] = useState(0);
+  const [visited, setVisited] = useState([]);
+  const [cards, setCards] = useState(shuffle(shapes));
+
+  const chooseCard = (shape) => {
+    if (visited.includes(shape)) {
+      setVisited([]);
+      setScore(0);
+    } else {
+      setVisited([...visited, shape]);
+      setScore(score + 1);
+    }
+  };
+
+  useEffect(() => {
+    if (score > highscore) setHighscore(score);
+    setCards(shuffle(shapes));
+  }, [score]);
 
   return (
     <div className="app">
@@ -30,8 +59,12 @@ function App() {
         <ScoreDisplay score={score} highscore={highscore} />
       </header>
       <div className="board">
-        {shapes.map((shape, i) => (
-          <Card key={shape.concat(String(i))} shape={shape} />
+        {cards.map((shape, i) => (
+          <Card
+            key={shape.concat(String(i))}
+            shape={shape}
+            chooseCard={chooseCard}
+          />
         ))}
       </div>
     </div>
