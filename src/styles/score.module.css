@@ -1,0 +1,8 @@
+.scoreDisplay {
+  align-self: center;
+  justify-self: flex-end;
+  display: flex;
+  justify-content: space-evenly;
+  width: 30ch;
+  font-size: 1.2rem;
+}
